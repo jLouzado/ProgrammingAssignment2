@@ -17,11 +17,19 @@ makeCacheMatrix <- function(x = matrix()) {
     matrix(set = set, get = get, setInv = setInv, getInv = getInv)
 }
 
-
 ## Function that returns matrix inverse from cache if available, 
 ## and calculates (and stores it) if it's not yet available.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-        
+    ## Return a matrix that is the inverse of 'x'
+    inv <- x$getInv()
+    if(!is.null(inv)) {
+        message("retrieved from cache")
+    }
+    else {
+        message("solving for inverse")
+        inv <- solve(x)
+        x$setInv(inv)
+    }
+    inv
 }
